@@ -1,6 +1,19 @@
-# Taxi-Rank Heuristic — A* 8-Puzzle Solver
+# 🧩 Taxi-Rank Heuristic — A* 8-Puzzle Solver
 
 An optimised A* search implementation for the classic 8-puzzle problem using a custom **Taxi-Rank heuristic** that combines Manhattan distance with a linear-conflict penalty.
+
+---
+
+## 📋 Table of Contents
+
+- [What is the 8-Puzzle?](#what-is-the-8-puzzle)
+- [The Taxi-Rank Heuristic](#the-taxi-rank-heuristic)
+- [Project Structure](#project-structure)
+- [Usage](#usage)
+- [Algorithm Details](#algorithm-details)
+- [Requirements](#requirements)
+- [Notes](#notes)
+- [License](#license)
 
 ---
 
@@ -30,10 +43,13 @@ h(n) = Σ Manhattan_distance(tile) + 0.5 × conflict_pairs
 ```
 
 ### Manhattan Distance
+
 For each tile, the Manhattan distance is the sum of horizontal and vertical steps needed to reach its goal position — a classic admissible lower bound.
 
 ### Linear Conflict Penalty
+
 Two tiles `u` and `v` are in **conflict** when:
+
 - They are in the **same row** (or column) currently and in the goal state, **and**
 - Their relative order is **reversed** — meaning one must pass the other to reach its goal.
 
@@ -46,8 +62,8 @@ Each conflict pair adds `+0.5` to `h(n)`. This makes the heuristic tighter than 
 ## Project Structure
 
 ```
-.
-├── taxi_rank.py    # Heuristic function, A* search, usage example
+8-puzzle-heuristic/
+├── 8_Puzzle.py    # Heuristic function, A* search, and usage example
 └── README.md
 ```
 
@@ -56,7 +72,7 @@ Each conflict pair adds `+0.5` to `h(n)`. This makes the heuristic tighter than 
 ## Usage
 
 ```python
-from taxi_rank import astar_taxi, taxi_rank_heuristic
+from 8_Puzzle import astar_taxi, taxi_rank_heuristic
 
 start_state = [2, 3, 6, 4, 1, 5, 7, 8, 0]
 goal_state  = [1, 2, 3, 4, 5, 6, 7, 8, 0]
@@ -69,6 +85,7 @@ print(f"h(start):         {taxi_rank_heuristic(start_state)}")
 ```
 
 ### Output
+
 ```
 Optimal solution: 5 moves
 Nodes explored:   8
@@ -87,6 +104,7 @@ Step 5: [[1, 2, 3], [4, 5, 6], [7, 8, 0]]
 ## Algorithm Details
 
 ### A* Search
+
 The solver uses standard A* with:
 
 | Component | Detail |
@@ -98,9 +116,11 @@ The solver uses standard A* with:
 | **Visited** | Dictionary mapping state → best `g` seen (allows re-expansion on cheaper path) |
 
 ### Neighbor Generation
+
 At each state, the blank tile (`0`) can slide in up to 4 directions (up, down, left, right), subject to grid boundary checks. Each valid swap produces a successor state.
 
 ### Admissibility
+
 The heuristic never overestimates the true number of moves required, guaranteeing that A* returns an **optimal solution**.
 
 ---
@@ -116,3 +136,13 @@ The heuristic never overestimates the true number of moves required, guaranteein
 
 - Puzzles with no solution (e.g. odd-parity permutations) are detected automatically — the function returns `(None, nodes_explored)`.
 - For very hard instances (>20 moves), the visited state space can grow large. Consider adding an IDA* variant for memory-constrained environments.
+
+---
+
+## License
+
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
+
+---
+
+*Built with ❤️ by [Nour Yehia](https://github.com/Naruto109k)*
